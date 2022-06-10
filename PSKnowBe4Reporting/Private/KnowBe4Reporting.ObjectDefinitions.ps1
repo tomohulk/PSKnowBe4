@@ -12,8 +12,8 @@ Class KnowBe4ReportingUser {
     [String]$Email
     [Float]$PhishPronePercentage
     [String]$PhoneNumber
-    [String]$Extention
-    [String]$MoblePhoneNumber
+    [String]$Extension
+    [String]$MobilePhoneNumber
     [String]$Location
     [String]$Division
     [String]$ManagerName
@@ -48,8 +48,8 @@ Class KnowBe4ReportingUser {
         $this.Email                = $object.email
         $this.PhishPronePercentage = $object.phish_prone_percentage
         $this.PhoneNumber          = $object.phone_number
-        $this.Extention            = $object.extention
-        $this.MoblePhoneNumber     = $object.mobile_phone_number
+        $this.Extension            = $object.extension
+        $this.MobilePhoneNumber    = $object.mobile_phone_number
         $this.Location             = $object.location
         $this.Division             = $object.division
         $this.ManagerName          = $object.manager_name
@@ -62,7 +62,7 @@ Class KnowBe4ReportingUser {
         $this.JoinedOn             = $object.joined_on
         $this.LastSignIn           = $object.last_sign_in
         $this.Status               = $object.status
-        $this.Organization         = $object.organisation
+        $this.Organization         = $object.organization
         $this.Department           = $object.department
         $this.Language             = $object.language
         $this.Comment              = $object.comment
@@ -87,7 +87,7 @@ Class KnowBe4ReportingGroup {
     [Nullable[KnowBe4ReportingStatus]]$Status
 
     KnowBe4ReportingGroup([Object]$object) {
-        $this.Id               = $object.id
+        $this.Id               = if ($null -ne $object.id) { $object.id } else { $object }
         $this.Name             = $object.name
         $this.GroupType        = $object.group_type
         $this.ProvisioningGuid = $object.provisioning_guid

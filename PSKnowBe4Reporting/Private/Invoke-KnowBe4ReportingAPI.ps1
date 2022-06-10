@@ -1,4 +1,7 @@
 Function Invoke-KnowBe4ReportingAPI {
+    [CmdletBinding()]
+    [OutputType()]
+
     Param (
         [Parameter(Mandatory = $true)]
         [String]

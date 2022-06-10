@@ -4,33 +4,34 @@
     Gets a user or a list of users using the KnowBe4 Reporting API.
 .DESCRIPTION
     This function gets all users or a filtered list of users using the KnowBe4 Reporting API.
-    Users can be returned by UserId, Status, or GroupId.
+    Users can be filtered by UserId, Status, or GroupId.
     The Group information can also be expanded for each user returned, note this will greatly increase the return time for the call.
 .INPUTS
-    System.String
-    System.Int
+    None
 .OUTPUTS
     KnowBe4ReportingUser
 .EXAMPLE
     PS C:\> Get-KnowBe4ReportingUser -UserId 123456
 
-    Id:                   123456
-    FirstName:            Thomas
-    LastName:             Malkewitz
-    Status:               Active
-    Email:                thomas.malkewitz@github.com
-    PhishPronePercentage: 33.3
-    CurrentRiskScore:     40.0
+    Id                   : 123456
+    FirstName            : Thomas
+    LastName             : Malkewitz
+    Status               : Active
+    Email                : thomas.malkewitz@github.com
+    PhishPronePercentage : 33.3
+    CurrentRiskScore     : 40.0
 .PARAMETER UserId
     System.Int.  The KnowBe4 unique user_id.
 .PARAMETER Status
     KnowBe4ReportingStatus.  The KnowBe4 enum status of a user.  Values are 'Active' or 'Archived'.
 .PARAMETER GroupId
-    System.Int.  The KnowBe 4 qunique group_id.
+    System.Int.  The KnowBe4 unique group_id.
 .PARAMETER ExpandGroup
     System.Management.Automation.SwitchParameter.  If this parameter is used, all of the groups a user of will be expanded.  By default on the GroupId is populated.
+.PARAMETER APIKey
+    System.String.  A valid KnowBe4 API Token.
 .NOTES
-    A vailid KnowBe4 API Key is needed.
+    A valid KnowBe4 API Key is needed.
     This can be passed per command or can be set in the '$env:KnowBe4ReportingAPIKey' environment variable.
 .LINK
     https://github.com/tomohulk/PSKnowBe4
@@ -63,7 +64,7 @@ Function Get-KnowBe4ReportingUser {
         $ExpandGroup,
 
         [Parameter()]
-        [Switch]
+        [String]
         $APIKey = $env:KnowBe4ReportingAPIKey
     )
 
