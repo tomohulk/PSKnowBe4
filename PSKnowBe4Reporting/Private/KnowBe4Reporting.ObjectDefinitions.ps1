@@ -25,7 +25,7 @@ Class KnowBe4ReportingUser {
     [String[]]$Alias
     [DateTime]$JoinedOn
     [Nullable[DateTime]]$LastSignIn
-    [KnowBe4ReportingStatus]$Status
+    [Nullable[KnowBe4ReportingStatus]]$Status
     [String]$Organization
     [String]$Department
     [String]$Language
@@ -84,7 +84,7 @@ Class KnowBe4ReportingGroup {
     [String]$ProvisioningGuid
     [Int]$MemberCount
     [Float]$CurrentRiskScore
-    [KnowBe4ReportingStatus]$Status
+    [Nullable[KnowBe4ReportingStatus]]$Status
 
     KnowBe4ReportingGroup([Object]$object) {
         $this.Id               = $object.id

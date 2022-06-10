@@ -16,7 +16,7 @@ GUID = '290f93b9-eaec-4e5c-8799-02e9b83b902f'
 Author = 'Thomas Malkewitz @tomohulk'
 
 # Company or vendor of this module
-CompanyName = 'UFP Industries'
+# CompanyName = ''
 
 # Copyright statement for this module
 Copyright = '(c) thomas. All rights reserved.'
@@ -61,16 +61,18 @@ FormatsToProcess = 'PSKnowBe4Reporting.Formats.ps1xml'
 # NestedModules = @()
 
 # Functions to export from this module, for best performance, do not use wildcards and do not delete the entry, use an empty array if there are no functions to export.
-FunctionsToExport = 'Get-KnowBe4ReportingUser'
+FunctionsToExport = @(
+    'Get-KnowBe4ReportingUser'
+)
 
 # Cmdlets to export from this module, for best performance, do not use wildcards and do not delete the entry, use an empty array if there are no cmdlets to export.
-CmdletsToExport = '*'
+# CmdletsToExport = '*'
 
 # Variables to export from this module
-VariablesToExport = '*'
+# VariablesToExport = '*'
 
 # Aliases to export from this module, for best performance, do not use wildcards and do not delete the entry, use an empty array if there are no aliases to export.
-AliasesToExport = '*'
+# AliasesToExport = '*'
 
 # DSC resources to export from this module
 # DscResourcesToExport = @()
@@ -79,7 +81,14 @@ AliasesToExport = '*'
 # ModuleList = @()
 
 # List of all files packaged with this module
-# FileList = @()
+FileList = @(
+    'Private\Invoke-KnowBe4ReportingAPI.ps1'
+    'Private\KnowBe4Reporting.ObjectDefinitions.ps1'
+    'Public\Get-KnowBe4ReportingUser.ps1'
+    'PSKnowBe4Reporting.Formats.ps1xml'
+    'PSKnowBe4Reporting.psd1'
+    'PSKNowBe4Reporting.psm1'
+)
 
 # Private data to pass to the module specified in RootModule/ModuleToProcess. This may also contain a PSData hashtable with additional module metadata used by PowerShell.
 PrivateData = @{
