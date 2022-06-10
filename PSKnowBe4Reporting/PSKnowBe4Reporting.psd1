@@ -63,6 +63,7 @@ FormatsToProcess = 'PSKnowBe4Reporting.Formats.ps1xml'
 # Functions to export from this module, for best performance, do not use wildcards and do not delete the entry, use an empty array if there are no functions to export.
 FunctionsToExport = @(
     'Get-KnowBe4ReportingGroup'
+    'Get-KnowBe4ReportingSubscription'
     'Get-KnowBe4ReportingUser'
 )
 
@@ -86,6 +87,7 @@ FileList = @(
     'Private\Invoke-KnowBe4ReportingAPI.ps1'
     'Private\KnowBe4Reporting.ObjectDefinitions.ps1'
     'Public\Get-KnowBe4ReportingGroup.ps1'
+    'Public\Get-KnowBe4ReportingSubscription.ps1'
     'Public\Get-KnowBe4ReportingUser.ps1'
     'PSKnowBe4Reporting.Formats.ps1xml'
     'PSKnowBe4Reporting.psd1'

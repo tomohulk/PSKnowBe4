@@ -82,5 +82,35 @@
                 </ListEntries>
             </ListControl>
         </View>
+        <View>
+            <Name>DefaultView</Name>
+            <ViewSelectedBy>
+                <TypeName>KnowBe4ReportingAdministrator</TypeName>
+            </ViewSelectedBy>
+            <ListControl>
+                <ListEntries>
+                    <ListEntry>
+                        <ListItems>
+                            <ListItem>
+                                <Label>Id</Label>
+                                <PropertyName>Id</PropertyName>
+                            </ListItem>
+                            <ListItem>
+                                <Label>FirstName</Label>
+                                <PropertyName>FirstName</PropertyName>
+                            </ListItem>
+                            <ListItem>
+                                <Label>LastName</Label>
+                                <PropertyName>LastName</PropertyName>
+                            </ListItem>
+                            <ListItem>
+                                <Label>Email</Label>
+                                <PropertyName>Email</PropertyName>
+                            </ListItem>
+                        </ListItems>
+                    </ListEntry>
+                </ListEntries>
+            </ListControl>
+        </View>
     </ViewDefinitions>
 </Configuration>

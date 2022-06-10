@@ -9,5 +9,6 @@ Current Functions for the Reporting API:
 
 ```
 Get-KnowBe4ReportingGroup
+Get-KnowBe4ReportingSubscription
 Get-KnowBe4ReportingUser
 ```

@@ -83,7 +83,7 @@ Class KnowBe4ReportingGroup {
     [String]$GroupType
     [String]$ProvisioningGuid
     [Int]$MemberCount
-    [Float]$CurrentRiskScore
+    [Double]$CurrentRiskScore
     [Nullable[KnowBe4ReportingStatus]]$Status
 
     KnowBe4ReportingGroup([Object]$object) {
@@ -94,5 +94,41 @@ Class KnowBe4ReportingGroup {
         $this.MemberCount      = $object.member_count
         $this.CurrentRiskScore = $object.current_risk_score
         $this.Status           = $object.status
+    }
+}
+
+Class KnowBe4ReportingSubscription {
+    [String]$Name
+    [String]$Type
+    [String[]]$Domain
+    [KnowBe4ReportingAdministrator[]]$Administrators
+    [String]$SubscriptionLevel
+    [DateTime]$SubscriptionEndDate
+    [Int]$NumberOfSeats
+    [Double]$CurrentRiskScore
+
+    KnowBe4ReportingSubscription([Object]$object) {
+        $this.Name                = $object.name
+        $this.Type                = $object.type
+        $this.Domain              = $object.domains
+        $this.Administrators      = $object.admins
+        $this.SubscriptionLevel   = $object.subscription_level
+        $this.SubscriptionEndDate = $object.subscription_end_date
+        $this.NumberOfSeats       = $object.number_of_seats
+        $this.CurrentRiskScore    = $object.current_risk_score
+    }
+}
+
+Class KnowBe4ReportingAdministrator {
+    [Int]$Id
+    [String]$FirstName
+    [String]$LastName
+    [String]$Email
+
+    KnowBe4ReportingAdministrator([Object]$object) {
+        $this.Id = $object.id
+        $this.FirstName = $object.first_name
+        $this.LastName = $object.last_name
+        $this.Email = $object.email
     }
 }
