@@ -4,9 +4,9 @@ Function Invoke-KnowBe4ReportingAPI {
         [String]
         $Endpoint,
 
-        [Parameter()]
+        [Parameter(Mandatory = $true)]
         [String]
-        $APIKey = $env:KnowBe4ReportingAPIKey
+        $APIKey
     )
 
     Process {
