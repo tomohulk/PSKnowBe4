@@ -4,7 +4,7 @@
     Gets a user or a list of users using the KnowBe4 Reporting API.
 .DESCRIPTION
     This function gets all users or a filtered list of users using the KnowBe4 Reporting API.
-    Users can be filtered by UserId, Status, or GroupId.
+    Users can be filtered by Id, Status, or GroupId.
     The Group information can also be expanded for each user returned, note this will greatly increase the return time for the call.
 .INPUTS
     None
@@ -20,14 +20,14 @@
     Email                : thomas.malkewitz@github.com
     PhishPronePercentage : 33.3
     CurrentRiskScore     : 40.0
-.PARAMETER UserId
-    System.Int.  The KnowBe4 unique user_id.
+.PARAMETER Id
+    System.Int.  The KnowBe4 unique user id.
 .PARAMETER Status
     KnowBe4ReportingStatus.  The KnowBe4 enum status of a user.  Values are 'Active' or 'Archived'.
 .PARAMETER GroupId
-    System.Int.  The KnowBe4 unique group_id.
+    System.Int.  The KnowBe4 unique group id.
 .PARAMETER ExpandGroup
-    System.Management.Automation.SwitchParameter.  If this parameter is used, all of the groups a user of will be expanded.  By default on the GroupId is populated.
+    System.Management.Automation.SwitchParameter.  If this parameter is used, all of the groups a user of will be expanded.  By default only the GroupId is populated.
 .PARAMETER APIKey
     System.String.  A valid KnowBe4 API Token.
 .NOTES
@@ -47,9 +47,9 @@ Function Get-KnowBe4ReportingUser {
     [OutputType()]
 
     Param (
-        [Parameter(ParameterSetName = 'ByUserId')]
+        [Parameter(ParameterSetName = 'ById')]
         [Int]
-        $UserId,
+        $Id,
 
         [Parameter(ParameterSetName = 'ByUserStatus')]
         [KnowBe4ReportingStatus]
@@ -69,8 +69,8 @@ Function Get-KnowBe4ReportingUser {
     )
 
     switch ($PSCmdlet.ParameterSetName) {
-        'ByUserId' {
-            $endpoint = 'users/{0}?per_page=500' -f $UserId
+        'ById' {
+            $endpoint = 'users/{0}?per_page=500' -f $Id
         }
 
         'ByUserStatus' {

@@ -6,3 +6,10 @@ foreach ($path in @('Private', 'Public')) {
 }
 
 #endregion ProviderPath
+
+
+#region Aliases
+
+New-Alias -Name Get-KnowBe4ReportingPST -Value Get-KnowBe4ReportingPhishingSecurityTest
+
+#endregion Aliases

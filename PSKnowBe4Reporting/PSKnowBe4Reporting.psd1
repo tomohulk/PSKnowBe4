@@ -63,6 +63,8 @@ FormatsToProcess = 'PSKnowBe4Reporting.Formats.ps1xml'
 # Functions to export from this module, for best performance, do not use wildcards and do not delete the entry, use an empty array if there are no functions to export.
 FunctionsToExport = @(
     'Get-KnowBe4ReportingGroup'
+    'Get-KnowBe4ReportingPhishingCampaign'
+    'Get-KnowBe4ReportingPhishingSecurityTest'
     'Get-KnowBe4ReportingSubscription'
     'Get-KnowBe4ReportingUser'
 )
@@ -74,7 +76,9 @@ FunctionsToExport = @(
 # VariablesToExport = '*'
 
 # Aliases to export from this module, for best performance, do not use wildcards and do not delete the entry, use an empty array if there are no aliases to export.
-# AliasesToExport = '*'
+AliasesToExport = @(
+    'Get-KnowBe4ReportingPST'
+)
 
 # DSC resources to export from this module
 # DscResourcesToExport = @()
@@ -87,6 +91,8 @@ FileList = @(
     'Private\Invoke-KnowBe4ReportingAPI.ps1'
     'Private\KnowBe4Reporting.ObjectDefinitions.ps1'
     'Public\Get-KnowBe4ReportingGroup.ps1'
+    'PUblic\Get-KnowBe4ReportingPhishingCampaign.ps1'
+    'PUblic\KnowBe4ReportingPhishingSecurityTest'
     'Public\Get-KnowBe4ReportingSubscription.ps1'
     'Public\Get-KnowBe4ReportingUser.ps1'
     'PSKnowBe4Reporting.Formats.ps1xml'

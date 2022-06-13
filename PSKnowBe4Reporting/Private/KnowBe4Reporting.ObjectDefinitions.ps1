@@ -23,7 +23,7 @@ Class KnowBe4ReportingUser {
     [KnowBe4ReportingGroup[]]$Group
     [Double]$CurrentRiskScore
     [String[]]$Alias
-    [DateTime]$JoinedOn
+    [Nullable[DateTime]]$JoinedOn
     [Nullable[DateTime]]$LastSignIn
     [Nullable[KnowBe4ReportingStatus]]$Status
     [String]$Organization
@@ -87,7 +87,7 @@ Class KnowBe4ReportingGroup {
     [Nullable[KnowBe4ReportingStatus]]$Status
 
     KnowBe4ReportingGroup([Object]$object) {
-        $this.Id               = if ($null -ne $object.id) { $object.id } else { $object }
+        $this.Id               = if ($null -ne $object.group_id) { $object.group_id } elseif ($null -ne $object.id) { $object.id } else { $object }
         $this.Name             = $object.name
         $this.GroupType        = $object.group_type
         $this.ProvisioningGuid = $object.provisioning_guid
@@ -103,7 +103,7 @@ Class KnowBe4ReportingSubscription {
     [String[]]$Domain
     [KnowBe4ReportingAdministrator[]]$Administrators
     [String]$SubscriptionLevel
-    [DateTime]$SubscriptionEndDate
+    [Nullable[DateTime]]$SubscriptionEndDate
     [Int]$NumberOfSeats
     [Double]$CurrentRiskScore
 
@@ -130,5 +130,169 @@ Class KnowBe4ReportingAdministrator {
         $this.FirstName = $object.first_name
         $this.LastName = $object.last_name
         $this.Email = $object.email
+    }
+}
+
+Class KnowBe4ReportingPhishingCampaign {
+    [Int]$Id
+    [String]$Name
+    [KnowBe4ReportingGroup[]]$Group
+    [Float]$LastPhishPronePercentage
+    [Nullable[DateTime]]$LastRun
+    [String]$Status
+    [Bool]$Hidden
+    [String]$SendDuration
+    [String]$TrackDuration
+    [String]$Frequency
+    [Int[]]$DifficultyFilter
+    [Nullable[DateTime]]$CreationDate
+    [Int]$PhishingSecurityTestCount
+    [KnowBe4ReportingPhishingSecurityTest[]]$PhishingSecurityTest
+
+    KnowBe4ReportingPhishingCampaign([Object]$object) {
+        $this.Id                        = $object.campaign_id
+        $this.Name                      = $object.name
+        $this.Group                     = $object.groups
+        $this.LastPhishPronePercentage  = $object.last_phish_prone_percentage
+        $this.LastRun                   = $object.last_run
+        $this.Status                    = $object.status
+        $this.Hidden                    = $object.hidden
+        $this.SendDuration              = $object.send_duration
+        $this.TrackDuration             = $object.track_duration
+        $this.Frequency                 = $object.frequency
+        $this.DifficultyFilter          = $object.difficulty_filter
+        $this.CreationDate              = $object.create_date
+        $this.PhishingSecurityTestCount = $object.psts_count
+        $this.PhishingSecurityTest      = $object.psts
+    }
+}
+
+Class KnowBe4ReportingPhishingSecurityTest {
+    [Int]$CampaignId
+    [Int]$Id
+    [String]$Status
+    [String]$Name
+    [KnowBe4ReportingGroup[]]$Group
+    [Float]$PhishPronePercentage
+    [Nullable[DateTime]]$StartedAt
+    [Int]$Duration
+    [KnowBe4ReportingPhishingSecurityTestCategory[]]$Category
+    [KnowBe4ReportingPhishingSecurityTestTemplate]$Template
+    [KnowBe4ReportingPhishingSecurityTestLandingPage]$LandingPage
+    [Int]$ScheduledCount
+    [Int]$DeliveredCount
+    [Int]$OpenedCount
+    [Int]$ClickedCount
+    [Int]$RepliedCount
+    [Int]$AttachmentOpenedCount
+    [Int]$MacroEnabledCount
+    [Int]$DataEnteredCount
+    [Int]$QRCodeScannedCount
+    [Int]$ReportedCount
+    [Int]$BouncedCount
+
+    KnowBe4ReportingPhishingSecurityTest ([Object]$object) {
+        $this.CampaignId            = $object.campaign_id
+        $this.Id                    = $object.pst_id
+        $this.Status                = $object.status
+        $this.Name                  = $object.name
+        $this.Group                 = $object.groups
+        $this.PhishPronePercentage  = $object.phish_prone_percentage
+        $this.StartedAt             = $object.started_at
+        $this.Duration              = $object.duration
+        $this.Category              = $object.category
+        $this.Template              = $object.template
+        $this.LandingPage           = $object.landing_page
+        $this.ScheduledCount        = $object.scheduled_count
+        $this.DeliveredCount        = $object.delivered_count
+        $this.OpenedCount           = $object.opened_count
+        $this.ClickedCount          = $object.clicked_count
+        $this.RepliedCount          = $object.replied_count
+        $this.AttachmentOpenedCount = $object.attachment_opened_count
+        $this.MacroEnabledCount     = $object.macro_enabled_count
+        $this.DataEnteredCount      = $object.data_entered_count
+        $this.QRCodeScannedCount    = $object.qr_code_scanned_count
+        $this.ReportedCount         = $object.reported_count
+        $this.BouncedCount          = $object.bounced_count
+    }
+}
+
+Class KnowBe4ReportingPhishingSecurityTestCategory {
+    [Int]$Id
+    [String]$Name
+
+    KnowBe4ReportingPhishingSecurityTestCategory([Object]$object) {
+        $this.Id   = $object.category_id
+        $this.Name = $object.name
+    }
+}
+
+Class KnowBe4ReportingPhishingSecurityTestTemplate {
+    [Int]$Id
+    [String]$Name
+    [Int]$Difficultly
+    [String]$Type
+
+    KnowBe4ReportingPhishingSecurityTestTemplate([Object]$object) {
+        $this.Id          = $object.id
+        $this.Name        = $object.name
+        $this.Difficultly = $object.difficulty
+        $this.Type        = $object.type
+    }
+}
+
+Class KnowBe4ReportingPhishingSecurityTestLandingPage {
+    [Int]$Id
+    [String]$Name
+
+    KnowBe4ReportingPhishingSecurityTestLandingPage([Object]$object) {
+        $this.Id   = $object.id
+        $this.Name = $object.name
+    }
+}
+
+Class KnowBe4ReportingRecipientResult {
+    [Int]$Id
+    [Int]$PishingSecurityTestId
+    [KnowBe4ReportingUser]$User
+    [KnowBe4ReportingPhishingSecurityTestTemplate]$Template
+    [Nullable[DateTime]]$ScheduledAt
+    [Nullable[DateTime]]$DeliveredAt
+    [Nullable[DateTime]]$OpenedAt
+    [Nullable[DateTime]]$ClickedAt
+    [Nullable[DateTime]]$RepliedAt
+    [Nullable[DateTime]]$AttachmentOpenedAt
+    [Nullable[DateTime]]$MacroEnabledAt
+    [Nullable[DateTime]]$DataEnteredAt
+    [Nullable[DateTime]]$QRCodeScannedAt
+    [Nullable[DateTime]]$ReportedAt
+    [Nullable[DateTime]]$BouncedAt
+    [String]$IPAddress
+    [String]$IPLocation
+    [String]$BrowserName
+    [String]$BrowserVersion
+    [String]$OperatingSystem
+
+    KnowBe4ReportingRecipientResult ([Object]$Object) {
+        $this.Id                    = $object.id
+        $this.PishingSecurityTestId = $object.pst_id
+        $this.User                  = $object.user
+        $this.Template              = $object.template
+        $this.ScheduledAt           = $object.scheduled_at
+        $this.DeliveredAt           = $object.delivered_at
+        $this.OpenedAt              = $object.opened_at
+        $this.ClickedAt             = $object.clicked_at
+        $this.RepliedAt             = $object.replied_at
+        $this.AttachmentOpenedAt    = $object.attachment_opened_at
+        $this.MacroEnabledAt        = $object.macro_enabled_at
+        $this.DataEnteredAt         = $object.data_entered_at
+        $this.QRCodeScannedAt       = $object.qr_code_scanned
+        $this.ReportedAt            = $object.reported_at
+        $this.BouncedAt             = $object.bounced_at
+        $this.IPAddress             = $object.ip
+        $this.IPLocation            = $object.ip_location
+        $this.BrowserName           = $object.browser
+        $this.BrowserVersion        = $object.browser_version
+        $this.OperatingSystem       = $object.os 
     }
 }
