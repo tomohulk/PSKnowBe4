@@ -131,7 +131,9 @@
                             </ListItem>
                             <ListItem>
                                 <Label>Group</Label>
-                                <PropertyName>Group</PropertyName>
+                                <ScriptBlock>
+                                    $_.Group.Id
+                                </ScriptBlock>
                             </ListItem>
                             <ListItem>
                                 <Label>LastPhishPronePercentage</Label>
@@ -183,13 +185,45 @@
                                 <Label>OpenedCount</Label>
                                 <PropertyName>OpenedCount</PropertyName>
                             </ListItem>
+                        </ListItems>
+                    </ListEntry>
+                </ListEntries>
+            </ListControl>
+        </View>
+        <View>
+            <Name>DefaultView</Name>
+            <ViewSelectedBy>
+                <TypeName>KnowBe4ReportingRecipientResult</TypeName>
+            </ViewSelectedBy>
+            <ListControl>
+                <ListEntries>
+                    <ListEntry>
+                        <ListItems>
                             <ListItem>
-                                <Label>ClickedCount</Label>
-                                <PropertyName>ClickedCount</PropertyName>
+                                <Label>Id</Label>
+                                <PropertyName>Id</PropertyName>
                             </ListItem>
                             <ListItem>
-                                <Label>DataEnteredCount</Label>
-                                <PropertyName>DataEnteredCount</PropertyName>
+                                <Label>PishingSecurityTestId</Label>
+                                <PropertyName>PishingSecurityTestId</PropertyName>
+                            </ListItem>
+                            <ListItem>
+                                <Label>User</Label>
+                                <ScriptBlock>
+                                    $_.User.Id
+                                </ScriptBlock>
+                            </ListItem>
+                            <ListItem>
+                                <Label>ScheduledAt</Label>
+                                <PropertyName>ScheduledAt</PropertyName>
+                            </ListItem>
+                            <ListItem>
+                                <Label>DeliveredAt</Label>
+                                <PropertyName>DeliveredAt</PropertyName>
+                            </ListItem>
+                            <ListItem>
+                                <Label>OpenedAt</Label>
+                                <PropertyName>OpenedAt</PropertyName>
                             </ListItem>
                         </ListItems>
                     </ListEntry>

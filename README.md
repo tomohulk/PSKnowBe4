@@ -11,6 +11,7 @@ Current Functions for the Reporting API:
 Get-KnowBe4ReportingGroup
 Get-KnowBe4ReportingPhishingCampaign
 Get-KnowBe4ReportingPhishingSecurityTest
+Get-KnowBe4ReportingRecipientResult
 Get-KnowBe4ReportingSubscription
 Get-KnowBe4ReportingUser
 ```

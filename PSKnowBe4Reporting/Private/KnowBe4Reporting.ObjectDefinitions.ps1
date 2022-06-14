@@ -273,8 +273,8 @@ Class KnowBe4ReportingRecipientResult {
     [String]$BrowserVersion
     [String]$OperatingSystem
 
-    KnowBe4ReportingRecipientResult ([Object]$Object) {
-        $this.Id                    = $object.id
+    KnowBe4ReportingRecipientResult([Object]$object) {
+        $this.Id                    = $object.recipient_id
         $this.PishingSecurityTestId = $object.pst_id
         $this.User                  = $object.user
         $this.Template              = $object.template
