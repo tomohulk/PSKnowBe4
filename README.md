@@ -15,7 +15,7 @@ It made sense to me to keep this two separate PowerShell wrappers as well. PSKno
 ### PSKnowBe4.Reporting
 
 Cmdlets:
-![PSKnowBe4ReportingAPIKey](/Docs/Images/PSKnowBe4ReportingAPIKey.png?raw=true)
+![PSKnowBe4ReportingAPIKey](/Docs/Images/PSKnowBe4Reporting-Cmdlets.png?raw=true)
 
 Each of the cmdlets support an `-APIKey` parameter which can be passed with each call.  However to simplify use, you can either set the DefaultParameterValue:
 
