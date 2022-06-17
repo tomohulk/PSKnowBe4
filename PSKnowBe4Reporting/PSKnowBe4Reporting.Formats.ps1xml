@@ -12,8 +12,8 @@
                     <ListEntry>
                         <ListItems>
                             <ListItem>
-                                <Label>Id</Label>
-                                <PropertyName>Id</PropertyName>
+                                <Label>UserId</Label>
+                                <PropertyName>UserId</PropertyName>
                             </ListItem>
                             <ListItem>
                                 <Label>FirstName</Label>
@@ -54,8 +54,8 @@
                     <ListEntry>
                         <ListItems>
                             <ListItem>
-                                <Label>Id</Label>
-                                <PropertyName>Id</PropertyName>
+                                <Label>GroupId</Label>
+                                <PropertyName>GroupId</PropertyName>
                             </ListItem>
                             <ListItem>
                                 <Label>Name</Label>
@@ -92,8 +92,8 @@
                     <ListEntry>
                         <ListItems>
                             <ListItem>
-                                <Label>Id</Label>
-                                <PropertyName>Id</PropertyName>
+                                <Label>AdministratorId</Label>
+                                <PropertyName>AdministratorId</PropertyName>
                             </ListItem>
                             <ListItem>
                                 <Label>FirstName</Label>
@@ -122,8 +122,8 @@
                     <ListEntry>
                         <ListItems>
                             <ListItem>
-                                <Label>Id</Label>
-                                <PropertyName>Id</PropertyName>
+                                <Label>PhishingCampaignId</Label>
+                                <PropertyName>PhishingCampaignId</PropertyName>
                             </ListItem>
                             <ListItem>
                                 <Label>Name</Label>
@@ -132,7 +132,7 @@
                             <ListItem>
                                 <Label>Group</Label>
                                 <ScriptBlock>
-                                    $_.Group.Id
+                                    $_.Group.GroupId
                                 </ScriptBlock>
                             </ListItem>
                             <ListItem>
@@ -146,6 +146,10 @@
                             <ListItem>
                                 <Label>Status</Label>
                                 <PropertyName>Status</PropertyName>
+                            </ListItem>
+                            <ListItem>
+                                <Label>PhishingSecurityTestCount</Label>
+                                <PropertyName>PhishingSecurityTestCount</PropertyName>
                             </ListItem>
                         </ListItems>
                     </ListEntry>
@@ -162,8 +166,8 @@
                     <ListEntry>
                         <ListItems>
                             <ListItem>
-                                <Label>Id</Label>
-                                <PropertyName>Id</PropertyName>
+                                <Label>PhishingSecurityTestId</Label>
+                                <PropertyName>PhishingSecurityTestId</PropertyName>
                             </ListItem>
                             <ListItem>
                                 <Label>Name</Label>
@@ -171,7 +175,9 @@
                             </ListItem>
                             <ListItem>
                                 <Label>Group</Label>
-                                <PropertyName>Group</PropertyName>
+                                <ScriptBlock>
+                                    $_.Group.GroupId
+                                </ScriptBlock>
                             </ListItem>
                             <ListItem>
                                 <Label>Status</Label>
@@ -200,8 +206,8 @@
                     <ListEntry>
                         <ListItems>
                             <ListItem>
-                                <Label>Id</Label>
-                                <PropertyName>Id</PropertyName>
+                                <Label>RecipientResultId</Label>
+                                <PropertyName>RecipientResultId</PropertyName>
                             </ListItem>
                             <ListItem>
                                 <Label>PishingSecurityTestId</Label>
@@ -210,7 +216,7 @@
                             <ListItem>
                                 <Label>User</Label>
                                 <ScriptBlock>
-                                    $_.User.Id
+                                    $_.User.UserId
                                 </ScriptBlock>
                             </ListItem>
                             <ListItem>

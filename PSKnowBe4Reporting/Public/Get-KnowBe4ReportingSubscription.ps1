@@ -19,6 +19,8 @@
     SubscriptionEndDate : 01/01/2025 12:00:00 AM
     NumberOfSeats       : 426
     CurrentRiskScore    : 29.426
+.PARAMETER RawResponse
+    System.Management.Automation.Switch.  Returns the raw JSON response.
 .PARAMETER APIKey
     System.String.  A valid KnowBe4 API Token.
 .NOTES
@@ -39,13 +41,15 @@ Function Get-KnowBe4ReportingSubscription {
 
     Param(
         [Parameter()]
+        [Switch]
+        $RawResponse,
+
+        [Parameter()]
         [String]
         $APIKey = $env:KnowBe4ReportingAPIKey
     )
 
     $endpoint = "account"
-    $apiCall = Invoke-KnowBe4ReportingAPI -Endpoint $endpoint -APIKey $APIKey
-    foreach($result in $apiCall) {
-        [KnowBe4ReportingSubscription]::new($result)
-    }
+    
+    Write-KnowBe4ReportingResponse -Endpoint $endpoint -ObjectType 'KnowBe4ReportingSubscription' -RawResponse $RawResponse.IsPresent -APIKey $APIKey
 }

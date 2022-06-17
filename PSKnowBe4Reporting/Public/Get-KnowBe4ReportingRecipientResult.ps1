@@ -11,7 +11,7 @@
 .EXAMPLE
     PS C:\> Get-KnowBe4ReportingRecipientResult -PhishingSecurityTestId 123456
 
-    Id                    : 426
+    RecipientResultId     : 426
     PishingSecurityTestId : 123456
     User                  : 72985
     ScheduledAt           : 10/22/2020 5:43:58 PM
@@ -21,6 +21,8 @@
     System.Int.  The KnowBe4 unique phishing security test id.
 .PARAMETER RecipientId
     System.Int.  The KnowBe4 unique recipient id of a user that was in the targeted phishing security test.
+.PARAMETER RawResponse
+    System.Management.Automation.Switch.  Returns the raw JSON response.
 .PARAMETER APIKey
     System.String.  A valid KnowBe4 API Token.
 .NOTES
@@ -39,37 +41,42 @@ Function Get-KnowBe4ReportingRecipientResult {
     [OutputType()]
 
     param (
-        [Parameter(Mandatory = $true)]
+        [Parameter(Mandatory = $true, ValueFromPipeLine = $true, ValueFromPipelineByPropertyName = $true)]
         [Alias('PSTId')]
-        [Int]
+        [Int[]]
         $PhishingSecurityTestId,
 
-        [Parameter(ParameterSetName = 'ByRecipientId')]
-        [Int]
+        [Parameter(ParameterSetName = 'ByRecipientId', ValueFromPipelineByPropertyName = $true)]
+        [Int[]]
         $RecipientId,
+
+        [Parameter()]
+        [Switch]
+        $RawResponse,
 
         [Parameter()]
         [String]
         $APIKey = $env:KnowBe4ReportingAPIKey
     )
 
-    switch ($PSCmdlet.ParameterSetName) {
-        'ByRecipientId' {
-            $endpoint = 'phishing/security_tests/{0}/recipients/{1}?per_page=500' -f $PhishingSecurityTestId, $RecipientId
+    process {
+        $endpoint = $null
+        switch ($PSCmdlet.ParameterSetName) {
+            'ByRecipientId' {
+                foreach ($phishingSecurityTestIdValue in $PhishingSecurityTestId) {
+                    foreach ($recipientIdValue in $RecipientId) {
+                        [Array]$endpoint += 'phishing/security_tests/{0}/recipients/{1}?per_page=500' -f $phishingSecurityTestIdValue, $recipientIdValue
+                    }
+                }
+            }
+
+            default {
+                foreach ($phishingSecurityTestIdValue in $PhishingSecurityTestId) {
+                    [Array]$endpoint += 'phishing/security_tests/{0}/recipients?per_page=500' -f $phishingSecurityTestIdValue
+                }
+            }
         }
 
-        default {
-            $endpoint = 'phishing/security_tests/{0}/recipients?per_page=500' -f $PhishingSecurityTestId
-        }
+        Write-KnowBe4ReportingResponse -Endpoint $endpoint -ObjectType 'KnowBe4ReportingRecipientResult' -RawResponse $RawResponse.IsPresent -APIKey $APIKey
     }
-
-    $page = 1
-    do {
-        $endpoint += '&page={0}' -f $page
-        $apiCall = Invoke-KnowBe4ReportingAPI -Endpoint $endpoint -APIKey $APIKey
-        foreach ($result in $apiCall) {
-            [KnowBe4ReportingRecipientResult]::new($result)
-        }
-        $page++
-    } until ($apiCall.Count -lt 500)
 }

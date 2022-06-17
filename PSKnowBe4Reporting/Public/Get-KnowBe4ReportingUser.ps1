@@ -13,7 +13,7 @@
 .EXAMPLE
     PS C:\> Get-KnowBe4ReportingUser -UserId 123456
 
-    Id                   : 123456
+    UserId               : 123456
     FirstName            : Thomas
     LastName             : Malkewitz
     Status               : Active
@@ -28,6 +28,8 @@
     System.Int.  The KnowBe4 unique group id.
 .PARAMETER ExpandGroup
     System.Management.Automation.SwitchParameter.  If this parameter is used, all of the groups a user of will be expanded.  By default only the GroupId is populated.
+.PARAMETER RawResponse
+    System.Management.Automation.Switch.  Returns the raw JSON response.
 .PARAMETER APIKey
     System.String.  A valid KnowBe4 API Token.
 .NOTES
@@ -47,16 +49,16 @@ Function Get-KnowBe4ReportingUser {
     [OutputType()]
 
     Param (
-        [Parameter(ParameterSetName = 'ById')]
-        [Int]
-        $Id,
+        [Parameter(ParameterSetName = 'ByUserId', ValueFromPipeline = $true, ValueFromPipelineByPropertyName = $true)]
+        [Int[]]
+        $UserId,
 
         [Parameter(ParameterSetName = 'ByUserStatus')]
         [KnowBe4ReportingStatus]
         $Status,
 
-        [Parameter(ParameterSetName = 'ByGroupId')]
-        [Int]
+        [Parameter(ParameterSetName = 'ByGroupId', ValueFromPipelineByPropertyName = $true)]
+        [Int[]]
         $GroupId,
 
         [Parameter()]
@@ -64,39 +66,42 @@ Function Get-KnowBe4ReportingUser {
         $ExpandGroup,
 
         [Parameter()]
+        [Switch]
+        $RawResponse,
+
+        [Parameter()]
         [String]
         $APIKey = $env:KnowBe4ReportingAPIKey
     )
 
-    switch ($PSCmdlet.ParameterSetName) {
-        'ById' {
-            $endpoint = 'users/{0}?per_page=500' -f $Id
+    process {
+        $endpoint = $null
+        switch ($PSCmdlet.ParameterSetName) {
+            'ByUserId' {
+                foreach ($userIdValue in $UserId) {
+                    [Array]$endpoint += 'users/{0}?per_page=500' -f $userIdValue
+                }
+            }
+
+            'ByUserStatus' {
+                $endpoint = 'users?status={0}&per_page=500' -f $Status
+            }
+
+            'ByGroupId' {
+                foreach ($GroupIdValue in $GroupId) {
+                    [Array]$endpoint += 'groups/{0}/members&per_page=500' -f $groupIdValue
+                }
+            }
+
+            default {
+                $endpoint = 'users?per_page=500'
+            }
         }
 
-        'ByUserStatus' {
-            $endpoint = 'users?status={0}&per_page=500' -f $Status
+        if ($ExpandGroup.IsPresent) {
+            $endpoint += '&expand=groups'
         }
 
-        'ByGroupId' {
-            $endpoint = 'groups/{0}/members&per_page=500' -f $GroupId
-        }
-
-        default {
-            $endpoint = 'users?per_page=500'
-        }
+        Write-KnowBe4ReportingResponse -Endpoint $endpoint -ObjectType 'KnowBe4ReportingUser' -RawResponse $RawResponse.IsPresent -APIKey $APIKey
     }
-
-    if ($ExpandGroup.IsPresent) {
-        $endpoint += '&expand=groups'
-    }
-
-    $page = 1
-    do {
-        $endpoint += '&page={0}' -f $page
-        $apiCall = Invoke-KnowBe4ReportingAPI -Endpoint $endpoint -APIKey $APIKey
-        foreach ($result in $apiCall) {
-            [KnowBe4ReportingUser]::new($result)
-        }
-        $page++
-    } until ($apiCall.Count -lt 500)
 }

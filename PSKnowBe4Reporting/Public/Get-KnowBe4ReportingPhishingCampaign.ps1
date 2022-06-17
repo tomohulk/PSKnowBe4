@@ -8,16 +8,18 @@
 .OUTPUTS
     KnowBe4ReportingPhishingCampaign
 .EXAMPLE
-    PS C:\> Get-KnowBe4ReportingPhishingCampaign -Id 123456
+    PS C:\> Get-KnowBe4ReportingPhishingCampaign -PhishingCampaignId 123456
 
-    Id                       : 123456
+    PhishingCampaignId       : 123456
     Name                     : TestCampaignAllUsers
     Group                    : {All_Users}
     LastPhishPronePercentage : 0.426
     LastRun                  : 1/1/2022 5:54:18 PM
     Status                   : Closed
-.PARAMETER Id
+.PARAMETER PhishingCampaignId
     System.Int.  The KnowBe4 unique campaign id.
+.PARAMETER RawResponse
+    System.Management.Automation.Switch.  Returns the raw JSON response.
 .PARAMETER APIKey
     System.String.  A valid KnowBe4 API Token.
 .NOTES
@@ -35,31 +37,33 @@ Function Get-KnowBe4ReportingPhishingCampaign {
     [OutputType()]
 
     param (
-        [Parameter(ParameterSetName = 'ById')]
-        [Object]
-        $Id,
+        [Parameter(ParameterSetName = 'ByPhishingCampaignId', ValueFromPipeLine = $true, ValueFromPipelineByPropertyName = $true)]
+        [Int[]]
+        $PhishingCampaignId,
+
+        [Parameter()]
+        [Switch]
+        $RawResponse,
 
         [Parameter()]
         [String]
         $APIKey = $env:KnowBe4ReportingAPIKey
     )
 
-    switch ($PSCmdlet.ParameterSetName) {
-        'ById' {
-            $endpoint = 'phishing/campaigns/{0}?per_page=500' -f $Id
-        }
-        default {
-            $endpoint = 'phishing/campaigns?per_page=500'
-        }
-    }
+    process {
+        $endpoint = $null
+        switch ($PSCmdlet.ParameterSetName) {
+            'ByPhishingCampaignId' {
+                foreach ($phishingCampaignIdValue in $PhishingCampaignId) {
+                    [Array]$endpoint += 'phishing/campaigns/{0}?per_page=500' -f $phishingCampaignIdValue
+                }
+            }
 
-    $page = 1
-    do {
-        $endpoint += '&page={0}' -f $page
-        $apiCall = Invoke-KnowBe4ReportingAPI -Endpoint $endpoint -APIKey $APIKey
-        foreach ($result in $apiCall) {
-            [KnowBe4ReportingPhishingCampaign]::new($result)
+            default {
+                $endpoint = 'phishing/campaigns?per_page=500'
+            }
         }
-        $page++
-    } until ($apiCall.Count -lt 500)
+
+        Write-KnowBe4ReportingResponse -Endpoint $endpoint -ObjectType 'KnowBe4ReportingPhishingCampaign' -RawResponse $RawResponse.IsPresent -APIKey $APIKey
+    }
 }

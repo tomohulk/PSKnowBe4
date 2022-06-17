@@ -4,7 +4,7 @@ Enum KnowBe4ReportingStatus {
 }
 
 Class KnowBe4ReportingUser {
-    [Int]$Id
+    [Int]$UserId
     [String]$EmployeeNumber
     [String]$FirstName
     [String]$LastName
@@ -40,7 +40,7 @@ Class KnowBe4ReportingUser {
     [Nullable[DateTime]]$CustomDate2
 
     KnowBe4ReportingUser([Object]$object) {
-        $this.Id                   = $object.id
+        $this.UserId               = $object.id
         $this.EmployeeNumber       = $object.employee_number
         $this.FirstName            = $object.first_name
         $this.LastName             = $object.last_name
@@ -78,7 +78,7 @@ Class KnowBe4ReportingUser {
 }
 
 Class KnowBe4ReportingGroup {
-    [Int]$Id
+    [Int]$GroupId
     [String]$Name
     [String]$GroupType
     [String]$ProvisioningGuid
@@ -87,7 +87,7 @@ Class KnowBe4ReportingGroup {
     [Nullable[KnowBe4ReportingStatus]]$Status
 
     KnowBe4ReportingGroup([Object]$object) {
-        $this.Id               = if ($null -ne $object.group_id) { $object.group_id } elseif ($null -ne $object.id) { $object.id } else { $object }
+        $this.GroupId          = if ($null -ne $object.group_id) { $object.group_id } elseif ($null -ne $object.id) { $object.id } else { $object }
         $this.Name             = $object.name
         $this.GroupType        = $object.group_type
         $this.ProvisioningGuid = $object.provisioning_guid
@@ -120,21 +120,21 @@ Class KnowBe4ReportingSubscription {
 }
 
 Class KnowBe4ReportingAdministrator {
-    [Int]$Id
+    [Int]$AdministratorId
     [String]$FirstName
     [String]$LastName
     [String]$Email
 
     KnowBe4ReportingAdministrator([Object]$object) {
-        $this.Id = $object.id
-        $this.FirstName = $object.first_name
-        $this.LastName = $object.last_name
-        $this.Email = $object.email
+        $this.AdministratorId = $object.id
+        $this.FirstName       = $object.first_name
+        $this.LastName        = $object.last_name
+        $this.Email           = $object.email
     }
 }
 
 Class KnowBe4ReportingPhishingCampaign {
-    [Int]$Id
+    [Int]$PhishingCampaignId
     [String]$Name
     [KnowBe4ReportingGroup[]]$Group
     [Float]$LastPhishPronePercentage
@@ -150,7 +150,7 @@ Class KnowBe4ReportingPhishingCampaign {
     [KnowBe4ReportingPhishingSecurityTest[]]$PhishingSecurityTest
 
     KnowBe4ReportingPhishingCampaign([Object]$object) {
-        $this.Id                        = $object.campaign_id
+        $this.PhishingCampaignId        = $object.campaign_id
         $this.Name                      = $object.name
         $this.Group                     = $object.groups
         $this.LastPhishPronePercentage  = $object.last_phish_prone_percentage
@@ -169,7 +169,7 @@ Class KnowBe4ReportingPhishingCampaign {
 
 Class KnowBe4ReportingPhishingSecurityTest {
     [Int]$CampaignId
-    [Int]$Id
+    [Int]$PhishingSecurityTestId
     [String]$Status
     [String]$Name
     [KnowBe4ReportingGroup[]]$Group
@@ -192,67 +192,67 @@ Class KnowBe4ReportingPhishingSecurityTest {
     [Int]$BouncedCount
 
     KnowBe4ReportingPhishingSecurityTest ([Object]$object) {
-        $this.CampaignId            = $object.campaign_id
-        $this.Id                    = $object.pst_id
-        $this.Status                = $object.status
-        $this.Name                  = $object.name
-        $this.Group                 = $object.groups
-        $this.PhishPronePercentage  = $object.phish_prone_percentage
-        $this.StartedAt             = $object.started_at
-        $this.Duration              = $object.duration
-        $this.Category              = $object.category
-        $this.Template              = $object.template
-        $this.LandingPage           = $object.landing_page
-        $this.ScheduledCount        = $object.scheduled_count
-        $this.DeliveredCount        = $object.delivered_count
-        $this.OpenedCount           = $object.opened_count
-        $this.ClickedCount          = $object.clicked_count
-        $this.RepliedCount          = $object.replied_count
-        $this.AttachmentOpenedCount = $object.attachment_opened_count
-        $this.MacroEnabledCount     = $object.macro_enabled_count
-        $this.DataEnteredCount      = $object.data_entered_count
-        $this.QRCodeScannedCount    = $object.qr_code_scanned_count
-        $this.ReportedCount         = $object.reported_count
-        $this.BouncedCount          = $object.bounced_count
+        $this.CampaignId             = $object.campaign_id
+        $this.PhishingSecurityTestId = $object.pst_id
+        $this.Status                 = $object.status
+        $this.Name                   = $object.name
+        $this.Group                  = $object.groups
+        $this.PhishPronePercentage   = $object.phish_prone_percentage
+        $this.StartedAt              = $object.started_at
+        $this.Duration               = $object.duration
+        $this.Category               = $object.category
+        $this.Template               = $object.template
+        $this.LandingPage            = $object.landing_page
+        $this.ScheduledCount         = $object.scheduled_count
+        $this.DeliveredCount         = $object.delivered_count
+        $this.OpenedCount            = $object.opened_count
+        $this.ClickedCount           = $object.clicked_count
+        $this.RepliedCount           = $object.replied_count
+        $this.AttachmentOpenedCount  = $object.attachment_opened_count
+        $this.MacroEnabledCount      = $object.macro_enabled_count
+        $this.DataEnteredCount       = $object.data_entered_count
+        $this.QRCodeScannedCount     = $object.qr_code_scanned_count
+        $this.ReportedCount          = $object.reported_count
+        $this.BouncedCount           = $object.bounced_count
     }
 }
 
 Class KnowBe4ReportingPhishingSecurityTestCategory {
-    [Int]$Id
+    [Int]$PhishingSecurityTestCategoryId
     [String]$Name
 
     KnowBe4ReportingPhishingSecurityTestCategory([Object]$object) {
-        $this.Id   = $object.category_id
-        $this.Name = $object.name
+        $this.PhishingSecurityTestCategoryIdId = $object.category_id
+        $this.Name                             = $object.name
     }
 }
 
 Class KnowBe4ReportingPhishingSecurityTestTemplate {
-    [Int]$Id
+    [Int]$PhishingSecurityTestTemplateId
     [String]$Name
     [Int]$Difficultly
     [String]$Type
 
     KnowBe4ReportingPhishingSecurityTestTemplate([Object]$object) {
-        $this.Id          = $object.id
-        $this.Name        = $object.name
-        $this.Difficultly = $object.difficulty
-        $this.Type        = $object.type
+        $this.PhishingSecurityTestTemplateId = $object.id
+        $this.Name                           = $object.name
+        $this.Difficultly                    = $object.difficulty
+        $this.Type                           = $object.type
     }
 }
 
 Class KnowBe4ReportingPhishingSecurityTestLandingPage {
-    [Int]$Id
+    [Int]$PhishingSecurityTestLandingPageId
     [String]$Name
 
     KnowBe4ReportingPhishingSecurityTestLandingPage([Object]$object) {
-        $this.Id   = $object.id
-        $this.Name = $object.name
+        $this.PhishingSecurityTestLandingPageId = $object.id
+        $this.Name                              = $object.name
     }
 }
 
 Class KnowBe4ReportingRecipientResult {
-    [Int]$Id
+    [Int]$RecipientResultId
     [Int]$PishingSecurityTestId
     [KnowBe4ReportingUser]$User
     [KnowBe4ReportingPhishingSecurityTestTemplate]$Template
@@ -274,7 +274,7 @@ Class KnowBe4ReportingRecipientResult {
     [String]$OperatingSystem
 
     KnowBe4ReportingRecipientResult([Object]$object) {
-        $this.Id                    = $object.recipient_id
+        $this.RecipientResultId     = $object.recipient_id
         $this.PishingSecurityTestId = $object.pst_id
         $this.User                  = $object.user
         $this.Template              = $object.template

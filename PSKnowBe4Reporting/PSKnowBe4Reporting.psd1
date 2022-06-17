@@ -78,7 +78,12 @@ FunctionsToExport = @(
 
 # Aliases to export from this module, for best performance, do not use wildcards and do not delete the entry, use an empty array if there are no aliases to export.
 AliasesToExport = @(
-    'Get-KnowBe4ReportingPST'
+    'Get-KB4RGroup'
+    'Get-KB4RPhishingCampaign'
+    'Get-KB4RPST'
+    'Get-KB4RRecipientResult'
+    'Get-KB4RSubscription'
+    'Get-KB4RUser'
 )
 
 # DSC resources to export from this module
@@ -91,6 +96,7 @@ AliasesToExport = @(
 FileList = @(
     'Private\Invoke-KnowBe4ReportingAPI.ps1'
     'Private\KnowBe4Reporting.ObjectDefinitions.ps1'
+    'Private\Write-KnowBe4ReportingResponse.ps1'
     'Public\Get-KnowBe4ReportingGroup.ps1'
     'Public\Get-KnowBe4ReportingPhishingCampaign.ps1'
     'Public\Get-KnowBe4ReportingPhishingSecurityTest.ps1'

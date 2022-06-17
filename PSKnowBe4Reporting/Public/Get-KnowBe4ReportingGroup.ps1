@@ -6,11 +6,11 @@
     This function gets all groups or a filtered list of groups using the KnowBe4 Reporting API.
     Users can be filtered by Id or Status.
 .INPUTS
-    None
+    System.Int
 .OUTPUTS
     KnowBe4ReportingGroup
 .EXAMPLE
-    PS C:\> Get-KnowBe4ReportingGroup -Id 123456
+    PS C:\> Get-KnowBe4ReportingGroup -GroupId 123456
 
     GroupId          : 123456
     Name             : My_Group
@@ -18,10 +18,12 @@
     MemberCount      : 1
     CurrentRiskScore : 44
     Status           : Active
-.PARAMETER Id
+.PARAMETER GroupId
     System.Int.  The KnowBe4 unique group id.
 .PARAMETER Status
     KnowBe4ReportingStatus.  The KnowBe4 enum status of a user.  Values are 'Active' or 'Archived'.
+.PARAMETER RawResponse
+    System.Management.Automation.Switch.  Returns the raw JSON response.
 .PARAMETER APIKey
     System.String.  A valid KnowBe4 API Token.
 .NOTES
@@ -41,40 +43,41 @@ Function Get-KnowBe4ReportingGroup {
     [OutputType()]
 
     param (
-        [Parameter(ParameterSetName = 'ById')]
-        [Int]
-        $Id,
+        [Parameter(ParameterSetName = 'ByGroupId', ValueFromPipeLine = $true, ValueFromPipelineByPropertyName = $true)]
+        [Int[]]
+        $GroupId,
 
         [Parameter(ParameterSetName = "ByStatus")]
         [KnowBe4ReportingStatus]
         $Status,
 
         [Parameter()]
+        [Switch]
+        $RawResponse,
+
+        [Parameter()]
         [String]
         $APIKey = $env:KnowBe4ReportingAPIKey
     )
 
-    switch ($PSCmdlet.ParameterSetName) {
-        'ByGroupId' {
-            $endpoint = 'groups/{0}?per_page=500' -f $Id
+    process {
+        $endpoint = $null
+        switch ($PSCmdlet.ParameterSetName) {
+            'ByGroupId' {
+                foreach ($groupIdValue in $GroupId) {
+                    [Array]$endpoint += 'groups/{0}?per_page=500' -f $groupIdValue
+                }
+            }
+
+            'ByStatus' {
+                $endpoint = 'groups?status={0}&per_page=500' -f $Status
+            }
+
+            default {
+                $endpoint = 'groups?per_page=500'
+            }
         }
 
-        'ByStatus' {
-            $endpoint = 'groups?status={0}&per_page=500' -f $Status
-        }
-
-        default {
-            $endpoint = 'groups?per_page=500'
-        }
+        Write-KnowBe4ReportingResponse -Endpoint $endpoint -ObjectType 'KnowBe4ReportingGroup' -RawResponse $RawResponse.IsPresent -APIKey $APIKey
     }
-
-    $page = 1
-    do {
-        $endpoint += '&page={0}' -f $page
-        $apiCall = Invoke-KnowBe4ReportingAPI -Endpoint $endpoint -APIKey $APIKey
-        foreach ($result in $apiCall) {
-            [KnowBe4ReportingGroup]::new($result)
-        }
-        $page++
-    } until ($apiCall.Count -lt 500)
 }
