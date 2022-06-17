@@ -8,7 +8,7 @@ There are two APIs for the KnowBe4 Product, Reporting and User Events.
 The Reporting API Docs can be found [here](https://developer.knowbe4.com/rest/reporting).
 The User Event API Docs can be found [here](https://developer.knowbe4.com/rest/userEvents).
 
-It made sense to me to keep this two separate PowerShell wrappers as well. PSKnowBe4Reporting and PSKnowBe4UserEvent.
+It made sense to me to keep these in two separate PowerShell wrappers as well. PSKnowBe4Reporting and PSKnowBe4UserEvent.
 
 ---
 
@@ -35,4 +35,4 @@ there is some rate limiting enforced by KnowBe4, so be aware of that.  The specs
 
 TODO:
 * Training Functions for the Reporting API.
-* The Entire User Events API ;).
+* The entire User Events API ;).
